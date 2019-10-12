@@ -53,27 +53,35 @@
 
 <style>
   input {
-    outline-color: #1e90ec;
-    width: 100%;
+    outline: none;
     width: 100%;
     padding: 12px 20px;
     border: 1px solid #ddd;
     margin-bottom: 0;
+    border-radius: 10px;
+  }
+
+  input:focus {
+    border: 1px solid #1e90ec;
   }
 
   #myUL {
-    width: 44%;
-    max-height: 200px;
+    margin: -1.2% 0 0;
+    width: 70vw;
+    max-height: 165px;
     overflow-y: scroll;
     overflow-x: hidden;
-    position: fixed;
     list-style-type: none;
+    position: fixed;
     padding: 0;
-    margin: -0.5% 0 0 0;
-    display: grid;
+    animation-duration: 0.3s;
+    animation-delay: 0.3s;
+    border-radius: 0 0 10px 10px;
   }
 
   li {
+    position: relative;
+    z-index: 10;
     border: 1px solid #ddd;
     margin-top: -1px; /* Prevent double borders */
     background-color: #ffffff;
@@ -82,7 +90,41 @@
     font-size: 16px;
     color: black;
     display: block;
+    opacity: 0;
+    transform: translate(0, -200px);
+    animation-direction: normal;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+    animation-name: dropin;
+    animation-duration: 0.6s;
   }
+
+  @keyframes dropin {
+    0% {
+      opacity: 0;
+      transform: translate(0, -200px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+  @-webkit-keyframes dropin {
+    0% {
+      opacity: 0;
+      transform: translate(0, -200px);
+    }
+    0% {
+      opacity: 0.5;
+      transform: translate(0, -100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+
   li:nth-child(odd) {
     background-color: #ddd;
   }

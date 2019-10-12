@@ -25,10 +25,15 @@
   const handleSubmit = () => {
     const selName = document.getElementById("volunteersList");
     const guestInput = document.getElementById("guest");
-    const location = document.getElementById("place");
+    const location = document.getElementById("class");
+
     if (selName.selectedIndex < 1) {
       alert("Please select your name.");
       selName.focus();
+      return false;
+    } else if (guestInput.innerText === "") {
+      alert("Please select your name.");
+      guestName.focus();
       return false;
     } else if (location.value.length < 1) {
       alert("Please input your location.");
@@ -58,21 +63,24 @@
 </script>
 
 <style>
-  .form {
+  /* .form {
     align-self: center;
     background-color: white;
     margin: 0 auto;
     width: 50vw;
-    border-radius: 10px;
     padding: 0 0.5em;
     max-height: 60vh;
-  }
+    border-radius: 10px;
+  } */
   #test-form {
+    background-color: white;
+    margin: 1em 2em;
     display: grid;
     align-items: center;
     justify-content: center;
     grid-gap: 10px;
   }
+
   #postForm {
     width: 100%;
   }
@@ -90,6 +98,7 @@
     text-transform: uppercase;
     font-weight: 700;
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+    margin-bottom: -10px;
   }
 
   button:hover,
@@ -108,69 +117,54 @@
     align-items: center;
   }
 
-  .squaredTwo {
-    display: flex;
-    width: 28px;
-    height: 28px;
-    position: relative;
-    margin: 0 auto;
-    background: #fcfff4;
-    background: linear-gradient(
-      to bottom,
-      #fcfff4 0%,
-      #dfe5d7 40%,
-      #b3bead 100%
-    );
-    box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
-  }
-  .squaredTwo label {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    position: absolute;
-    left: 4px;
-    top: 4px;
-    background: linear-gradient(to bottom, #222222 0%, #45484d 100%);
-    box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.5), 0px 1px 0px white;
-  }
-  .squaredTwo label:after {
-    content: "";
-    width: 9px;
-    height: 5px;
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    border: 3px solid #fcfff4;
-    border-top: none;
-    border-right: none;
-    background: transparent;
-    opacity: 0;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-  }
-  .squaredTwo label:hover::after {
-    opacity: 0.3;
-  }
-  .squaredTwo input[type="checkbox"] {
-    visibility: hidden;
-  }
-  .squaredTwo input[type="checkbox"]:checked + label:after {
-    opacity: 1;
-  }
-
-  .checkOut {
-    width: 100%;
-    position: relative;
-    margin: 0;
-  }
-
   .checkContainer {
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 250px 20px;
-    align-items: center;
+    display: flex;
+    width: 50%;
+    justify-content: flex-start;
     color: red;
   }
+
+  input[type="checkbox"] {
+    visibility: hidden;
+  }
+
+  #checklabel {
+    height: 50px;
+    width: 50px;
+    background-color: #f44;
+    display: block;
+    border-radius: 100%;
+  }
+
+  input[type="checkbox"]:checked + label {
+    border: 2px solid black;
+  }
+
+  /* .checkContainer label {
+    font-size: 18px;
+  } */
+
+  /* input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid #1e90ec;
+    color: #1e90ec;
+    cursor: pointer;
+    line-height: 1;
+    padding: 16px;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+    margin-right: 10px;
+  }
+
+  input[type="checkbox"]:checked {
+    background: blue;
+    color: white;
+  } */
 </style>
 
 <div class="form">
@@ -181,21 +175,9 @@
       <h2>Volunteer Check In</h2>
       <h2>{time}</h2>
     </div>
-    <div class="checkContainer">
-      <div>
-        <h3 class="checkOut">Check Box To Check Out</h3>
-      </div>
-      <div class="squaredTwo">
-        <input
-          type="checkbox"
-          value="None"
-          id="squaredTwo"
-          name="check"
-          on:click={checkOut} />
-        <label for="squaredTwo" />
-      </div>
-    </div>
+
     <Input
+      class="volInput"
       label="Volunteer Name"
       id="volunteersList"
       type="text"
@@ -231,6 +213,17 @@
         onInput={setVolPlace} />
     {/if}
     <br />
+    <div class="checkContainer">
+
+      <input
+        type="checkbox"
+        value="None"
+        id="mycheck"
+        name="check"
+        on:click={checkOut} />
+      <label id="checklabel" for="mycheck">&#10003;</label>
+
+    </div>
     <button
       form="test-form"
       type="submit"
