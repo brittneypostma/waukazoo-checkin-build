@@ -2,21 +2,13 @@
   import { onMount } from "svelte";
 
   import Input from "./Input.svelte";
-
-  const date = new Date();
-  const dd = date.getDate();
-  const mm = date.getMonth() + 1;
-  const yy = date.getFullYear();
-  const today = `${mm}/${dd}/${yy}`;
-  const time = date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+  import Modal from "./Modal.svelte";
 
   let volName = "";
   let volPlace = "";
   let guestVolName = "";
   let checkIn = true;
+  let showModal = false;
 
   const setVolName = e => (volName = e.target.value);
   const setVolPlace = e => (volPlace = e.target.value);
@@ -25,20 +17,14 @@
   const handleSubmit = () => {
     const selName = document.getElementById("volunteersList");
     const guestInput = document.getElementById("guest");
-    const location = document.getElementById("class");
+    const location = document.getElementById("place");
 
     if (selName.selectedIndex < 1) {
       alert("Please select your name.");
       selName.focus();
-      return false;
-    } else if (guestInput.innerText === "") {
-      alert("Please select your name.");
-      guestName.focus();
-      return false;
     } else if (location.value.length < 1) {
       alert("Please input your location.");
       location.focus();
-      return false;
     }
   };
 
@@ -57,23 +43,27 @@
         method: "POST",
         body: new FormData(form)
       });
+
+      showModal = !showModal;
+      setTimeout(function() {
+        showModal = !showModal;
+      }, 5000);
       document.getElementById("test-form").reset();
     });
   });
 </script>
 
 <style>
-  /* .form {
+  .form {
     align-self: center;
     background-color: white;
     margin: 0 auto;
     width: 50vw;
     padding: 0 0.5em;
-    max-height: 60vh;
+    max-height: 100%;
     border-radius: 10px;
-  } */
+  }
   #test-form {
-    background-color: white;
     margin: 1em 2em;
     display: grid;
     align-items: center;
@@ -109,17 +99,19 @@
       0 10px 10px rgba(0, 0, 0, 0.22);
   }
 
-  .date {
-    margin: 0 0 -20px;
+  .form-title {
+    font-size: 18px;
+    margin: 0;
     padding: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
 
   .checkContainer {
     display: flex;
-    width: 50%;
+    margin: 0 auto 18px;
+    align-items: center;
     justify-content: flex-start;
     color: red;
   }
@@ -129,55 +121,48 @@
   }
 
   #checklabel {
-    height: 50px;
-    width: 50px;
-    background-color: #f44;
+    height: 35px;
+    width: 35px;
+    background-color: rgb(255, 255, 255);
+    border: 3px inset #1e90ec;
+    margin-right: 10px;
     display: block;
-    border-radius: 100%;
   }
 
   input[type="checkbox"]:checked + label {
     border: 2px solid black;
+    font-size: 24px;
   }
-
-  /* .checkContainer label {
-    font-size: 18px;
-  } */
-
-  /* input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
-    border: 2px solid #1e90ec;
-    color: #1e90ec;
-    cursor: pointer;
-    line-height: 1;
-    padding: 16px;
-    text-decoration: none;
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: 700;
-    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
-    margin-right: 10px;
-  }
-
-  input[type="checkbox"]:checked {
-    background: blue;
-    color: white;
-  } */
 </style>
+
+<div class="checkContainer">
+  <input
+    type="checkbox"
+    value="None"
+    id="mycheck"
+    name="check"
+    on:click={checkOut} />
+  <label id="checklabel" for="mycheck">
+    {#if !checkIn}&#10003;{/if}
+  </label>
+  <p>Check box to check out.</p>
+</div>
 
 <div class="form">
 
+  {#if showModal}
+    <Modal on:close={() => (showModal = !showModal)}>
+      <h2 slot="header" class="modal-header">Thank You!</h2>
+      <p>Your form has been submitted.</p>
+    </Modal>
+  {/if}
+
   <form name="submit-to-google-sheet" id="test-form">
-    <div class="date">
-      <h2>{today}</h2>
-      <h2>Volunteer Check In</h2>
-      <h2>{time}</h2>
+    <div class="form-title">
+      <h1>Volunteer Check In</h1>
     </div>
 
     <Input
-      class="volInput"
       label="Volunteer Name"
       id="volunteersList"
       type="text"
@@ -204,6 +189,7 @@
     {#if checkIn}
       <Input
         label="Location"
+        placeholder="Where will you be volunteering?"
         type="text"
         id="place"
         name="Location"
@@ -212,18 +198,7 @@
         bind:value={volPlace}
         onInput={setVolPlace} />
     {/if}
-    <br />
-    <div class="checkContainer">
 
-      <input
-        type="checkbox"
-        value="None"
-        id="mycheck"
-        name="check"
-        on:click={checkOut} />
-      <label id="checklabel" for="mycheck">&#10003;</label>
-
-    </div>
     <button
       form="test-form"
       type="submit"

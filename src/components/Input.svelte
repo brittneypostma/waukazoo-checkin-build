@@ -1,4 +1,5 @@
 <script>
+  import { namesData as data } from "../data.js";
   export let required = false;
   export let placeholder = "";
   export let type = "text";
@@ -8,15 +9,9 @@
   export let id;
   export let label;
   export let className;
-  import { onMount } from "svelte";
-  import { namesData as data } from "../data.js";
 
+  // makes value reactive
   $: if (!value) value = "";
-
-  onMount(() => {
-    const input = document.getElementById("volunteersList");
-    input.addEventListener("click", handleToggleSearch);
-  });
 
   let clickedSearch = false;
   const handleToggleSearch = () => {
@@ -65,14 +60,16 @@
     border: 1px solid #1e90ec;
   }
 
+  .displayList {
+    width: 100%;
+  }
+
   #myUL {
-    margin: -1.2% 0 0;
-    width: 70vw;
+    margin: 0 0 0 1%;
     max-height: 165px;
     overflow-y: scroll;
     overflow-x: hidden;
     list-style-type: none;
-    position: fixed;
     padding: 0;
     animation-duration: 0.3s;
     animation-delay: 0.3s;
@@ -80,8 +77,6 @@
   }
 
   li {
-    position: relative;
-    z-index: 10;
     border: 1px solid #ddd;
     margin-top: -1px; /* Prevent double borders */
     background-color: #ffffff;
@@ -153,25 +148,32 @@
 
 <label for={id}>{label}</label>
 {#if id === 'volunteersList'}
-  <input
-    {required}
-    {name}
-    {className}
-    {placeholder}
-    id="volunteersList"
-    bind:value
-    on:click={handleToggleSearch}
-    on:input={onInput}
-    on:keyup={filterFunction} />
-  {#if clickedSearch}
-    <div class="displayList">
+  <div class="displayList">
+    <input
+      {required}
+      {name}
+      {className}
+      {placeholder}
+      id="volunteersList"
+      bind:value
+      on:click={handleToggleSearch}
+      on:input={onInput}
+      on:keyup={filterFunction} />
+    {#if clickedSearch}
       <ul id="myUL">
         {#each data as name}
           <li on:click={handleInputName}>{name.firstname} {name.lastname}</li>
         {/each}
       </ul>
-    </div>
-  {/if}
+    {/if}
+  </div>
 {:else if type === 'text'}
-  <input {required} {name} {id} {className} bind:value on:input={onInput} />
+  <input
+    {required}
+    {name}
+    {id}
+    {placeholder}
+    {className}
+    bind:value
+    on:input={onInput} />
 {/if}
