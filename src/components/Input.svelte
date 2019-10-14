@@ -58,6 +58,9 @@
 
   input:focus {
     border: 1px solid #1e90ec;
+  }
+
+  input:focus:first-child {
     border-radius: 10px 10px 0 0;
   }
 
