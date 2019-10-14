@@ -1,13 +1,13 @@
 <script>
   import Volunteer from "./components/Volunteer.svelte";
+  import Info from "./components/Info.svelte";
 </script>
 
 <style>
   .body {
     display: grid;
-    overflow: none;
-    height: 100vh;
-    grid-template-rows: 150px 1fr;
+    grid-template-rows: 150px 1fr 150px;
+    height: 98vh;
     font-family: "Montserrat", sans-serif;
   }
 
@@ -29,16 +29,25 @@
   }
 
   main {
-    height: 100%;
     background-color: #111;
     display: grid;
-    text-align: center;
     align-content: center;
+    align-items: center;
   }
 
-  p {
-    margin-top: -5%;
-    color: white;
+  .vol {
+    display: grid;
+    justify-content: center;
+  }
+
+  @media (max-width: 550px) {
+    h1 {
+      font-size: 24px;
+    }
+
+    main {
+      padding: 1em 0;
+    }
   }
 </style>
 
@@ -55,11 +64,13 @@
     <img src="./logo.png" alt="logo" class="logo" />
   </header>
   <main>
-    <p>
-      If you are not volunteering, please use the book to sign in.
-      <br />
-      (ie. visiting for lunch, dropping off something, picking up)
-    </p>
-    <Volunteer />
+
+    <div class="vol">
+      <Volunteer />
+    </div>
+
   </main>
+
+  <Info />
+
 </div>

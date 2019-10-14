@@ -58,6 +58,7 @@
 
   input:focus {
     border: 1px solid #1e90ec;
+    border-radius: 10px 10px 0 0;
   }
 
   .displayList {
@@ -65,7 +66,8 @@
   }
 
   #myUL {
-    margin: 0 0 0 1%;
+    width: 105%;
+    margin: 0;
     max-height: 165px;
     overflow-y: scroll;
     overflow-x: hidden;

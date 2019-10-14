@@ -55,14 +55,46 @@
 
 <style>
   .form {
-    align-self: center;
     background-color: white;
-    margin: 0 auto;
-    width: 50vw;
-    padding: 0 0.5em;
-    max-height: 100%;
+    padding: 1em;
     border-radius: 10px;
   }
+
+  .checkContainer {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    color: red;
+    font-weight: 600;
+  }
+
+  input[type="checkbox"] {
+    visibility: hidden;
+  }
+
+  #checklabel {
+    height: 30px;
+    width: 30px;
+    background-color: rgb(255, 255, 255);
+    border: 3px inset #1e90ec;
+    margin-right: 10px;
+    display: grid;
+    justify-content: center;
+  }
+
+  input[type="checkbox"]:checked + label {
+    font-size: 24px;
+  }
+
+  .form-title {
+    font-size: 18px;
+    margin: -20px 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   #test-form {
     margin: 1em 2em;
     display: grid;
@@ -71,11 +103,8 @@
     grid-gap: 10px;
   }
 
-  #postForm {
-    width: 100%;
-  }
-
   button {
+    width: 100%;
     background-color: transparent;
     border: 2px solid #1e90ec;
     color: #1e90ec;
@@ -98,55 +127,7 @@
     box-shadow: 0 0 40px 40px #1e90ec inset, 0 14px 28px rgba(0, 0, 0, 0.25),
       0 10px 10px rgba(0, 0, 0, 0.22);
   }
-
-  .form-title {
-    font-size: 18px;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .checkContainer {
-    display: flex;
-    margin: 0 auto 18px;
-    align-items: center;
-    justify-content: flex-start;
-    color: red;
-  }
-
-  input[type="checkbox"] {
-    visibility: hidden;
-  }
-
-  #checklabel {
-    height: 35px;
-    width: 35px;
-    background-color: rgb(255, 255, 255);
-    border: 3px inset #1e90ec;
-    margin-right: 10px;
-    display: block;
-  }
-
-  input[type="checkbox"]:checked + label {
-    border: 2px solid black;
-    font-size: 24px;
-  }
 </style>
-
-<div class="checkContainer">
-  <input
-    type="checkbox"
-    value="None"
-    id="mycheck"
-    name="check"
-    on:click={checkOut} />
-  <label id="checklabel" for="mycheck">
-    {#if !checkIn}&#10003;{/if}
-  </label>
-  <p>Check box to check out.</p>
-</div>
 
 <div class="form">
 
@@ -158,6 +139,20 @@
   {/if}
 
   <form name="submit-to-google-sheet" id="test-form">
+
+    <div class="checkContainer">
+      <input
+        type="checkbox"
+        value="None"
+        id="mycheck"
+        name="check"
+        on:click={checkOut} />
+      <label id="checklabel" for="mycheck">
+        {#if !checkIn}&#10003;{/if}
+      </label>
+      <p>Check box to check out.</p>
+    </div>
+
     <div class="form-title">
       <h1>Volunteer Check In</h1>
     </div>
@@ -207,10 +202,6 @@
       Submit
     </button>
 
-    <p style="color: red;">
-      **If the visitor is not in the system, use the Guest Visitor name and a
-      new input box will come up for the guests name.
-    </p>
   </form>
 
 </div>
