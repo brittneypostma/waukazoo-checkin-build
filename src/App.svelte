@@ -36,6 +36,8 @@
   }
 
   .vol {
+    margin: 1em auto;
+    padding: 1em 0;
     display: grid;
     justify-content: center;
   }
@@ -43,10 +45,6 @@
   @media (max-width: 550px) {
     h1 {
       font-size: 24px;
-    }
-
-    main {
-      padding: 1em 0;
     }
   }
 </style>
