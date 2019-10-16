@@ -159,7 +159,8 @@
       {name}
       {className}
       {placeholder}
-      id="volunteersList"
+      {id}
+      autocomplete="off"
       bind:value
       on:click={handleToggleSearch}
       on:input={onInput}
@@ -180,5 +181,6 @@
     {placeholder}
     {className}
     bind:value
+    autocomplete="off"
     on:input={onInput} />
 {/if}

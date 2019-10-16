@@ -30,15 +30,22 @@
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     margin: 0 10px;
-    transition: all 0.5s ease;
+    transition: all 0.3s ease;
   }
 
   .steps:hover {
-    transform: scale(1.3);
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+
+  p {
+    font-size: 16px;
   }
 
   strong {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #1e90ec;
+    font-weight: 800;
   }
 </style>
 

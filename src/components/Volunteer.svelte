@@ -6,6 +6,7 @@
 
   let volName = "";
   let volPlace = "";
+  let volNotes = "";
   let guestVolName = "";
   let checkIn = true;
   let showModal = false;
@@ -15,6 +16,7 @@
 
   const setVolName = e => (volName = e.target.value);
   const setVolPlace = e => (volPlace = e.target.value);
+  const setVolNotes = e => (volNotes = e.target.value);
   const setGuestVolName = e => (guestVolName = e.target.value);
 
   // Check that the guest name matches the name pulled from the data file //
@@ -64,6 +66,9 @@
         showModal = !showModal;
       }, 5000);
       document.getElementById("test-form").reset();
+      selName.innerHTML = "";
+      guestInput.innerHTML = "";
+      location.innerHTML = "";
     }
   };
 </script>
@@ -71,8 +76,8 @@
 <style>
   .form {
     background-color: white;
-    padding: 1em;
     border-radius: 10px;
+    padding-bottom: 10px;
   }
 
   .checkContainer {
@@ -98,12 +103,12 @@
   }
 
   input[type="checkbox"]:checked + label {
-    font-size: 24px;
+    font-size: 26px;
   }
 
   .form-title {
     font-size: 18px;
-    margin: -20px 0 0;
+    margin: -20px 0;
     padding: 0;
     display: flex;
     justify-content: center;
@@ -143,6 +148,18 @@
     box-shadow: 0 0 40px 40px #1e90ec inset, 0 14px 28px rgba(0, 0, 0, 0.25),
       0 10px 10px rgba(0, 0, 0, 0.22);
   }
+
+  .modal-header {
+    font-size: 56px;
+    margin: 0 auto 1em;
+    display: grid;
+  }
+
+  .modal-p {
+    font-size: 20px;
+    margin: 0 auto 1em;
+    text-align: center;
+  }
 </style>
 
 <div class="form">
@@ -152,7 +169,8 @@
   {#if showModal}
     <Modal on:close={() => (showModal = !showModal)}>
       <h2 slot="header" class="modal-header">Thank You!</h2>
-      <p>Your form has been submitted.</p>
+
+      <p class="modal-p">Your form has been submitted.</p>
     </Modal>
   {/if}
 
@@ -174,7 +192,11 @@
     </div>
 
     <div class="form-title">
-      <h1>Volunteer Check In</h1>
+      {#if checkIn}
+        <h1>Volunteer Check In</h1>
+      {:else}
+        <h1>Check Out</h1>
+      {/if}
     </div>
 
     <Input
@@ -208,7 +230,7 @@
     {#if checkIn}
       <Input
         label="Location"
-        placeholder="Where will you be volunteering?"
+        placeholder="What class or location?"
         type="text"
         id="place"
         name="Location"
@@ -216,6 +238,17 @@
         className="place"
         bind:value={volPlace}
         onInput={setVolPlace} />
+
+      <Input
+        label="Reason for Visiting"
+        placeholder="What will you be doing?"
+        type="text"
+        id="notes"
+        name="Notes"
+        required="true"
+        className="notes"
+        bind:value={volNotes}
+        onInput={setVolNotes} />
     {/if}
 
     <button form="test-form" type="submit" id="postForm">Submit</button>
