@@ -29,9 +29,11 @@
   }
 
   .wo {
-    width: 100px;
-    height: 75px;
+    width: 175px;
+    height: 90px;
     margin-right: 1em;
+    position: relative;
+    top: 1%;
   }
 
   h1 {

@@ -21,12 +21,24 @@
     justify-items: center;
   }
 
-  p {
+  .steps {
+    display: grid;
+    font-size: 14px;
+    border-radius: 10px;
     text-align: center;
     padding: 5px;
     background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     margin: 0 10px;
+    transition: all 0.5s ease;
+  }
+
+  .steps:hover {
+    transform: scale(1.3);
+  }
+
+  strong {
+    border-bottom: 1px solid black;
   }
 </style>
 
@@ -35,34 +47,35 @@
   <div class="list">
     <div class="ol-list">
 
-      <p>
+      <div class="steps">
         <strong>Step 1</strong>
-        <br />
-        This is a touch screen, you can tap or use the mouse to select
-      </p>
-      <p>
+        <p>This is a touch screen, you can tap or use the mouse to select</p>
+      </div>
+      <div class="steps">
         <strong>Step 2</strong>
-        <br />
-        Click on the Volunteer Name box and start typing to search for your
-        name.
-      </p>
-      <p>
+        <p>
+          Click on the Volunteer Name box and start typing to search for your
+          name.
+        </p>
+      </div>
+      <div class="steps">
         <strong>Step 3</strong>
-        <br />
-        Once you see your name, double click or tap on it to input it.
-      </p>
-      <p>
+        <p>Once you see your name, double click or tap on it to input it.</p>
+      </div>
+      <div class="steps">
         <strong>Step 4</strong>
-        <br />
-        Input where you are volunteering at and what you will be doing in the
-        Location box.
-      </p>
-      <p>
+        <p>
+          Input where you are volunteering at and what you will be doing in the
+          Location box.
+        </p>
+      </div>
+      <div class="steps">
         <strong>Step 5</strong>
-        <br />
-        Press submit. If everything worked correctly, a box will pop up saying
-        thanks!
-      </p>
+        <p>
+          Press submit. If everything worked correctly, a box will pop up saying
+          thanks!
+        </p>
+      </div>
     </div>
 
   </div>

@@ -1,5 +1,4 @@
 <script>
-  import { onMount } from "svelte";
   import { namesData as names } from "../data.js";
 
   import Input from "./Input.svelte";
@@ -10,31 +9,24 @@
   let guestVolName = "";
   let checkIn = true;
   let showModal = false;
+  let formSubmitted = false;
+
+  //  Get Values of Inputs //
 
   const setVolName = e => (volName = e.target.value);
   const setVolPlace = e => (volPlace = e.target.value);
   const setGuestVolName = e => (guestVolName = e.target.value);
 
+  // Check that the guest name matches the name pulled from the data file //
+
   const checkName = (arr, name) =>
     arr.some(el => `${el.firstname} ${el.lastname}` === volName) ? true : false;
 
-  // const post = () => {
-  //   const scriptURL =
-  //     "https://script.google.com/macros/s/AKfycbzrKqVJEidj98LDaebjqwQX4Ti5tjvWcx52oLBrQwKqDH29_uo/exec";
-  //   const form = document.forms["submit-to-google-sheet"];
+  // Check if the checkbox is checked //
 
-  //   form.addEventListener("submit", e => {
-  //     e.preventDefault();
-  //     fetch(scriptURL, {
-  //       method: "POST",
-  //       body: new FormData(form)
-  //     });
-  //     showModal = !showModal;
-  //     setTimeout(function() {
-  //       showModal = !showModal;
-  //     }, 5000);
-  //   });
-  // };
+  const checkOut = () => (checkIn = !checkIn);
+
+  // Submit the form //
 
   const handleSubmit = e => {
     const selName = document.getElementById("volunteersList");
@@ -62,23 +54,17 @@
       selName.focus();
       return false;
     } else {
-      form.addEventListener("submit", e => {
-        e.preventDefault();
-        fetch(scriptURL, {
-          method: "POST",
-          body: new FormData(form)
-        });
+      e.preventDefault();
+      fetch(scriptURL, {
+        method: "POST",
+        body: new FormData(form)
+      }).then(res => res.json());
+      showModal = !showModal;
+      setTimeout(function() {
         showModal = !showModal;
-        setTimeout(function() {
-          showModal = !showModal;
-        }, 5000);
-        document.getElementById("test-form").reset();
-      });
+      }, 5000);
+      document.getElementById("test-form").reset();
     }
-  };
-
-  const checkOut = () => {
-    checkIn = !checkIn;
   };
 </script>
 
@@ -147,6 +133,7 @@
     font-weight: 700;
     transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
     margin-bottom: -10px;
+    border-radius: 10px;
   }
 
   button:hover,
@@ -160,6 +147,8 @@
 
 <div class="form">
 
+  <!-- Show the Modal only if the form is submitted -->
+
   {#if showModal}
     <Modal on:close={() => (showModal = !showModal)}>
       <h2 slot="header" class="modal-header">Thank You!</h2>
@@ -167,7 +156,9 @@
     </Modal>
   {/if}
 
-  <form name="submit-to-google-sheet" id="test-form">
+  <!-- Form -->
+
+  <form name="submit-to-google-sheet" id="test-form" on:submit={handleSubmit}>
 
     <div class="checkContainer">
       <input
@@ -197,6 +188,8 @@
       className="volName"
       onInput={setVolName} />
 
+    <!-- If Guest Visitor is clicked, open new input for name. -->
+
     {#if volName === 'Guest Visitor'}
       <Input
         label="Guest Name"
@@ -209,6 +202,8 @@
         name="Other"
         onInput={setGuestVolName} />
     {/if}
+
+    <!-- If Checkbox is selected, don't show the location box. -->
 
     {#if checkIn}
       <Input
@@ -223,13 +218,7 @@
         onInput={setVolPlace} />
     {/if}
 
-    <button
-      form="test-form"
-      type="submit"
-      id="postForm"
-      on:click={handleSubmit}>
-      Submit
-    </button>
+    <button form="test-form" type="submit" id="postForm">Submit</button>
 
   </form>
 
