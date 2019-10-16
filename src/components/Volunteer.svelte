@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { namesData as names } from "../data.js";
 
   import Input from "./Input.svelte";
   import Modal from "./Modal.svelte";
@@ -14,43 +15,71 @@
   const setVolPlace = e => (volPlace = e.target.value);
   const setGuestVolName = e => (guestVolName = e.target.value);
 
-  const handleSubmit = () => {
+  const checkName = (arr, name) =>
+    arr.some(el => `${el.firstname} ${el.lastname}` === volName) ? true : false;
+
+  // const post = () => {
+  //   const scriptURL =
+  //     "https://script.google.com/macros/s/AKfycbzrKqVJEidj98LDaebjqwQX4Ti5tjvWcx52oLBrQwKqDH29_uo/exec";
+  //   const form = document.forms["submit-to-google-sheet"];
+
+  //   form.addEventListener("submit", e => {
+  //     e.preventDefault();
+  //     fetch(scriptURL, {
+  //       method: "POST",
+  //       body: new FormData(form)
+  //     });
+  //     showModal = !showModal;
+  //     setTimeout(function() {
+  //       showModal = !showModal;
+  //     }, 5000);
+  //   });
+  // };
+
+  const handleSubmit = e => {
     const selName = document.getElementById("volunteersList");
     const guestInput = document.getElementById("guest");
     const location = document.getElementById("place");
+    const selVal = selName.value;
 
-    if (selName.selectedIndex < 1) {
-      alert("Please select your name.");
-      selName.focus();
-    } else if (location.value.length < 1) {
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbzrKqVJEidj98LDaebjqwQX4Ti5tjvWcx52oLBrQwKqDH29_uo/exec";
+    const form = document.forms["submit-to-google-sheet"];
+
+    const check = checkName(names, selVal);
+
+    if (location === "") {
       alert("Please input your location.");
       location.focus();
+      return false;
+    } else if (guestInput === "") {
+      alert("Please input your name in the Guest Visitor box.");
+      guestInput.focus();
+      return false;
+    } else if (!check) {
+      alert("Please select your name or Guest Visitor from the list.");
+      e.preventDefault();
+      selName.focus();
+      return false;
+    } else {
+      form.addEventListener("submit", e => {
+        e.preventDefault();
+        fetch(scriptURL, {
+          method: "POST",
+          body: new FormData(form)
+        });
+        showModal = !showModal;
+        setTimeout(function() {
+          showModal = !showModal;
+        }, 5000);
+        document.getElementById("test-form").reset();
+      });
     }
   };
 
   const checkOut = () => {
     checkIn = !checkIn;
   };
-
-  onMount(() => {
-    const scriptURL =
-      "https://script.google.com/macros/s/AKfycbzrKqVJEidj98LDaebjqwQX4Ti5tjvWcx52oLBrQwKqDH29_uo/exec";
-    const form = document.forms["submit-to-google-sheet"];
-
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      fetch(scriptURL, {
-        method: "POST",
-        body: new FormData(form)
-      });
-
-      showModal = !showModal;
-      setTimeout(function() {
-        showModal = !showModal;
-      }, 5000);
-      document.getElementById("test-form").reset();
-    });
-  });
 </script>
 
 <style>

@@ -6,19 +6,34 @@
 <style>
   .body {
     display: grid;
-    grid-template-rows: 150px 1fr 150px;
+    grid-template-rows: 138px 5fr 1fr;
     height: 98vh;
     font-family: "Montserrat", sans-serif;
   }
 
   header {
+    position: relative;
+    top: -5%;
     height: 150px;
     color: #111;
     display: grid;
     grid-template-columns: 1fr 150px;
-    align-items: center;
+    align-items: flex-start;
     padding: 0 1em;
+    background-color: white;
   }
+
+  .school {
+    display: flex;
+    align-items: center;
+  }
+
+  .wo {
+    width: 100px;
+    height: 75px;
+    margin-right: 1em;
+  }
+
   h1 {
     font-size: 40px;
   }
@@ -36,7 +51,6 @@
   }
 
   .vol {
-    margin: 1em auto;
     padding: 1em 0;
     display: grid;
     justify-content: center;
@@ -52,6 +66,8 @@
 <div class="body">
   <header class="header">
     <div class="school">
+
+      <img src="./wo.png" alt="wo" class="wo" />
       <h1>
         Waukazoo Elementary
         <br />
