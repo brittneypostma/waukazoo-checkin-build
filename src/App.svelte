@@ -7,6 +7,7 @@
   .body {
     display: grid;
     grid-template-rows: 138px 5fr 1fr;
+    width: 100vw;
     height: 98vh;
     font-family: "Montserrat", sans-serif;
   }
@@ -18,7 +19,7 @@
     color: #111;
     display: grid;
     grid-template-columns: 1fr 150px;
-    align-items: flex-start;
+    align-content: center;
     padding: 0 1em;
     background-color: white;
   }
@@ -58,9 +59,21 @@
     justify-content: center;
   }
 
-  @media (max-width: 550px) {
+  @media (max-width: 676px) {
+    .header {
+      grid-template-columns: 150px 1fr;
+    }
+    .wo {
+      display: none;
+    }
     h1 {
-      font-size: 24px;
+      font-size: 28px;
+      grid-row: 1/2;
+      grid-column: 2/3;
+    }
+    .logo {
+      grid-row: 1/2;
+      justify-self: flex-start;
     }
   }
 </style>

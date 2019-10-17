@@ -90,7 +90,7 @@
     font-size: 16px;
     color: black;
     display: block;
-    opacity: 0;
+    opacity: 1;
     transform: translate(0, -200px);
     animation-direction: normal;
     animation-iteration-count: 1;
@@ -168,7 +168,9 @@
     {#if clickedSearch}
       <ul id="myUL">
         {#each data as name}
-          <li on:click={handleInputName}>{name.firstname} {name.lastname}</li>
+          <li on:mouseenter={handleInputName}>
+            {name.firstname} {name.lastname}
+          </li>
         {/each}
       </ul>
     {/if}

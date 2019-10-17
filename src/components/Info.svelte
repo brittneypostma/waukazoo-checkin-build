@@ -47,6 +47,18 @@
     border-bottom: 1px solid #1e90ec;
     font-weight: 800;
   }
+
+  @media only screen and (max-width: 550px) {
+    .steps {
+      display: none;
+    }
+    .list {
+      display: none;
+    }
+    .spans {
+      width: 75%;
+    }
+  }
 </style>
 
 <div class="info">
@@ -56,7 +68,7 @@
 
       <div class="steps">
         <strong>Step 1</strong>
-        <p>This is a touch screen, you can tap or use the mouse to select</p>
+        <p>This is a touch screen, you can tap or use the mouse to select.</p>
       </div>
       <div class="steps">
         <strong>Step 2</strong>
@@ -67,7 +79,7 @@
       </div>
       <div class="steps">
         <strong>Step 3</strong>
-        <p>Once you see your name, double click or tap on it to input it.</p>
+        <p>Once you see your name, click or tap on it to input it.</p>
       </div>
       <div class="steps">
         <strong>Step 4</strong>

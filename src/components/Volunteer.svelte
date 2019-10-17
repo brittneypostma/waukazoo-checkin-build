@@ -28,6 +28,17 @@
 
   const checkOut = () => (checkIn = !checkIn);
 
+  // Reset the form //
+
+  const resetForm = () => {
+    document.getElementById("test-form").reset();
+    checkIn = true;
+    volName = "";
+    volPlace = "";
+    volNotes = "";
+    guestVolName = "";
+  };
+
   // Submit the form //
 
   const handleSubmit = e => {
@@ -65,10 +76,7 @@
       setTimeout(function() {
         showModal = !showModal;
       }, 5000);
-      document.getElementById("test-form").reset();
-      selName.innerHTML = "";
-      guestInput.innerHTML = "";
-      location.innerHTML = "";
+      resetForm();
     }
   };
 </script>
